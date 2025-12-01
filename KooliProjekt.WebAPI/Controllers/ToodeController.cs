@@ -1,44 +1,31 @@
+using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Features.Tellimused;
+using KooliProjekt.Application.Features.Tooted;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using KooliProjekt.Application.Data;
+using System.Threading.Tasks;
 
 namespace KooliProjekt.WebAPI.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-
-    public class ToodeController : ControllerBase
+    public class ToodeController : ApiControllerBase
     {
-        public int i = 0;
+        private readonly IMediator _mediator;
 
-        private static readonly string[] Summaries = new[]
+        public ToodeController(IMediator mediator)
         {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
-
-        private readonly ILogger<ToodeController> _logger;
-
-        public ToodeController(ILogger<ToodeController> logger)
-        {
-            _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetToode")]
-        public IEnumerable<Toode> Get()
+        [HttpGet]
+        public async Task<IActionResult> List([FromQuery] ListToodeQuery query)
         {
+            var response = await _mediator.Send(query);
 
-            return Enumerable.Range(1, 5).Select(index => new Toode
-            {
-                ID = index,
-                Name = "Test",
-                Description = Summaries[Random.Shared.Next(Summaries.Length)],
-                FotoURL = "https://google.com",
-                Price = 10
-            })
-            .ToArray();
+            return Result(response);
         }
     }
 }

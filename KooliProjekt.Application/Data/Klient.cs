@@ -13,6 +13,9 @@ namespace KooliProjekt.Application.Data
     {
         public int ID { get; set; }
 
+        [Required]
+        [MaxLength(50)]
+        [MinLength(1)]
         public string Name { get; set; }
 
         public string Address { get; set; }

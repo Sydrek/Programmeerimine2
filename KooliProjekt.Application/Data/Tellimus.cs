@@ -13,7 +13,10 @@ namespace KooliProjekt.Application.Data
     {
         public int ID { get; set; }
 
-        public int InvoiceNumber { get; set; }
+        [Required]
+        [MaxLength(50)]
+        [MinLength(1)]
+        public string InvoiceNumber { get; set; }
 
         public DateTime InvoiceDate { get; set; }
 

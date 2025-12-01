@@ -1,41 +1,31 @@
+using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Features.Arved;
+using KooliProjekt.Application.Features.Kliendid;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using KooliProjekt.Application.Data;
+using System.Threading.Tasks;
 
 namespace KooliProjekt.WebAPI.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class KlientController : ControllerBase
+    public class KlientController : ApiControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Freezing", "Bracing", "Chilly", "Cool", "Mild", "Warm", "Balmy", "Hot", "Sweltering", "Scorching"
-        };
+        private readonly IMediator _mediator;
 
-        private readonly ILogger<KlientController> _logger;
-
-        public KlientController(ILogger<KlientController> logger)
+        public KlientController(IMediator mediator)
         {
-            _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetKlient")]
-        public IEnumerable<Klient> Get()
+        [HttpGet]
+        public async Task<IActionResult> List([FromQuery] ListKlientQuery query)
         {
-            return Enumerable.Range(1, 5).Select(index => new Klient
-            {
-                ID = index,
-                Name = "Test",
-                Address = Summaries[Random.Shared.Next(Summaries.Length)],
-                Email = "klient@gmail.com",
-                Phone = "553321",
-                Discount = 5.5f
-            })
-            .ToArray();
+            var response = await _mediator.Send(query);
+
+            return Result(response);
         }
     }
 }

@@ -1,41 +1,30 @@
+using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Features.Arved;
+using MediatR;
+using Microsoft.AspNetCore.Mvc;
+using Microsoft.Extensions.Logging;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using Microsoft.AspNetCore.Mvc;
-using Microsoft.Extensions.Logging;
-using KooliProjekt.Application.Data;
+using System.Threading.Tasks;
 
 namespace KooliProjekt.WebAPI.Controllers
 {
-    [ApiController]
-    [Route("[controller]")]
-    public class ArveController : ControllerBase
+    public class ArveController : ApiControllerBase
     {
-        private static readonly string[] Summaries = new[]
-        {
-            "Odav Arve", "Kallis Arve", "Normaalne Arve", "Tasuta Arve", "Kergelt kallis Arve", "Tavaline Arve", "Poe Arve", "Soe Arve", "Kuum Arve", "Kõrvetav Arve"
-        };
+        private readonly IMediator _mediator;
 
-        private readonly ILogger<ArveController> _logger;
-
-        public ArveController(ILogger<ArveController> logger)
+        public ArveController(IMediator mediator)
         {
-            _logger = logger;
+            _mediator = mediator;
         }
 
-        [HttpGet(Name = "GetArve")]
-        public IEnumerable<Arve> Get()
+        [HttpGet]
+        public async Task<IActionResult> List([FromQuery] ListArveQuery query)
         {
-            return Enumerable.Range(1, 5).Select(index => new Arve
-            {
-                ID = index,
-                LineItem = "Test",
-                UnitPrice = 67f,
-                Quantity = 3,
-                VatRate = 21f,
-                Total = 200f
-            })
-            .ToArray();
+            var response = await _mediator.Send(query);
+
+            return Result(response);
         }
     }
 }
