@@ -26,17 +26,21 @@ namespace KooliProjekt.Application.Features.Kliendid
             var result = new OperationResult();
 
             var list = new Klient();
-            if(request.Id == 0)
+            if(request.ID == 0)
             {
                 await _dbContext.Kliendid.AddAsync(list);
             }
             else
             {
-                list = await _dbContext.Kliendid.FindAsync(request.Id);
+                list = await _dbContext.Kliendid.FindAsync(request.ID);
                 //_dbContext.ToDoLists.Update(list);
             }
 
-            list.Name = request.Title;
+            list.Name = request.Name;
+            list.Address = request.Address;
+            list.Email = request.Email;
+            list.Phone = request.Phone;
+            list.Discount = request.Discount;
             
             await _dbContext.SaveChangesAsync();
 

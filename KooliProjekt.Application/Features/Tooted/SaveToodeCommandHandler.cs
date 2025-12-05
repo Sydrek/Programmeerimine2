@@ -26,17 +26,20 @@ namespace KooliProjekt.Application.Features.Tooted
             var result = new OperationResult();
 
             var list = new Toode();
-            if(request.Id == 0)
+            if(request.ID == 0)
             {
                 await _dbContext.Tooted.AddAsync(list);
             }
             else
             {
-                list = await _dbContext.Tooted.FindAsync(request.Id);
+                list = await _dbContext.Tooted.FindAsync(request.ID);
                 //_dbContext.ToDoLists.Update(list);
             }
 
-            list.Name = request.Title;
+            list.Name = request.Name;
+            list.Description = request.Description;
+            list.FotoURL = request.FotoURL;
+            list.Price = request.Price;
             
             await _dbContext.SaveChangesAsync();
 

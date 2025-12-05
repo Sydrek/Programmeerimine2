@@ -11,10 +11,10 @@ namespace KooliProjekt.Application.Data
 
     public class Arve
     {
-        public int ID { get; set; }
-
         [Required]
-        [MaxLength(50)]
+        public int ID { get; set; }
+        [Required]
+        [MaxLength(255)]
         [MinLength(1)]
         public string LineItem { get; set; }
 

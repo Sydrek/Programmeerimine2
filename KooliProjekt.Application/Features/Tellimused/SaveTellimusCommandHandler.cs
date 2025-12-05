@@ -26,17 +26,24 @@ namespace KooliProjekt.Application.Features.Tellimused
             var result = new OperationResult();
 
             var list = new Tellimus();
-            if(request.Id == 0)
+            if(request.ID == 0)
             {
                 await _dbContext.Tellimused.AddAsync(list);
             }
             else
             {
-                list = await _dbContext.Tellimused.FindAsync(request.Id);
+                list = await _dbContext.Tellimused.FindAsync(request.ID);
                 //_dbContext.ToDoLists.Update(list);
             }
 
-            list.InvoiceNumber = request.Title;
+            list.InvoiceNumber = request.InvoiceNumber;
+            list.InvoiceDate = request.InvoiceDate;
+            list.DueDate = request.DueDate;
+            list.Status = request.Status;
+            list.SubTotal = request.SubTotal;
+            list.ShippingTotal = request.ShippingTotal;
+            list.Discount = request.Discount;
+            list.GrandTotal = request.GrandTotal;
             
             await _dbContext.SaveChangesAsync();
 

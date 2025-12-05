@@ -26,17 +26,21 @@ namespace KooliProjekt.Application.Features.Arved
             var result = new OperationResult();
 
             var list = new Arve();
-            if(request.Id == 0)
+            if(request.ID == 0)
             {
                 await _dbContext.Arved.AddAsync(list);
             }
             else
             {
-                list = await _dbContext.Arved.FindAsync(request.Id);
+                list = await _dbContext.Arved.FindAsync(request.ID);
                 //_dbContext.ToDoLists.Update(list);
             }
 
-            list.LineItem = request.Title;
+            list.LineItem = request.LineItem;
+            list.UnitPrice = request.UnitPrice;
+            list.Quantity = request.Quantity;
+            list.VatRate = request.VatRate;
+            list.Total = request.Total;
             
             await _dbContext.SaveChangesAsync();
 
