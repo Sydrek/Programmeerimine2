@@ -1,49 +1,46 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
-using Microsoft.VisualBasic;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
+    // 28.11
+    // Kasutab ITellimusRepositoryt
     public class GetTellimusQueryHandler : IRequestHandler<GetTellimusQuery, OperationResult<object>>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ITellimusRepository _TellimusRepository;
 
-        public GetTellimusQueryHandler(ApplicationDbContext dbContext)
+        public GetTellimusQueryHandler(ITellimusRepository TellimusRepository)
         {
-            _dbContext = dbContext;
+            _TellimusRepository = TellimusRepository;
         }
 
         public async Task<OperationResult<object>> Handle(GetTellimusQuery request, CancellationToken cancellationToken)
         {
             var result = new OperationResult<object>();
+            var list = await _TellimusRepository.GetByIdAsync(request.ID);
 
-            result.Value = await _dbContext
-                .Tellimused
-                .Include(list => list.Items)
-                .Where(list => list.ID == request.ID)
-                .Select(list => new
+            result.Value = new // Anonymous object
+            {
+                ID = list.ID,
+                Name = list.InvoiceNumber,
+
+                Items = list.Items.Select(item => new
                 {
-                    ID = list.ID,
-                    Name = list.InvoiceNumber,
-
-                    Items = list.Items.Select(item => new
-                    {
-                        InvoiceDate = item.InvoiceDate,
-                        DueDate = item.DueDate,
-                        Status = item.Status,
-                        SubTotal = item.SubTotal,
-                        ShippingTotal = item.ShippingTotal,
-                        Discount = item.Discount,
-                        GrandTotal = item.GrandTotal,
-                    })
+                    InvoiceDate = item.InvoiceDate,
+                    DueDate = item.DueDate,
+                    Status = item.Status,
+                    SubTotal = item.SubTotal,
+                    ShippingTotal = item.ShippingTotal,
+                    Discount = item.Discount,
+                    GrandTotal = item.GrandTotal,
                 })
-                .FirstOrDefaultAsync();
+            };
 
             return result;
         }

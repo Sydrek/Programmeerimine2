@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
-using KooliProjekt.Application.Infrastructure.Paging;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace KooliProjekt.Application.Features.Kliendid
 {
+    // 28.11
+    // Kasutab IKlientRepositoryt
     public class SaveKlientCommandHandler : IRequestHandler<SaveKlientCommand, OperationResult>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IKlientRepository _KlientRepository;
 
-        public SaveKlientCommandHandler(ApplicationDbContext dbContext)
+        public SaveKlientCommandHandler(IKlientRepository KlientRepository)
         {
-            _dbContext = dbContext;
+            _KlientRepository = KlientRepository;
         }
 
         public async Task<OperationResult> Handle(SaveKlientCommand request, CancellationToken cancellationToken)
@@ -26,19 +23,14 @@ namespace KooliProjekt.Application.Features.Kliendid
             var result = new OperationResult();
 
             var list = new KlientList();
-            if(request.ID == 0)
+            if (request.ID != 0)
             {
-                await _dbContext.Kliendid.AddAsync(list);
-            }
-            else
-            {
-                list = await _dbContext.Kliendid.FindAsync(request.ID);
-                //_dbContext.ToDoLists.Update(list);
+                list = await _KlientRepository.GetByIdAsync(request.ID);
             }
 
             list.Name = request.Name;
-            
-            await _dbContext.SaveChangesAsync();
+
+            await _KlientRepository.SaveAsync(list);
 
             return result;
         }

@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
-using KooliProjekt.Application.Infrastructure.Paging;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace KooliProjekt.Application.Features.Tooted
 {
+    // 28.11
+    // Kasutab IToodeRepositoryt
     public class SaveToodeCommandHandler : IRequestHandler<SaveToodeCommand, OperationResult>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IToodeRepository _ToodeRepository;
 
-        public SaveToodeCommandHandler(ApplicationDbContext dbContext)
+        public SaveToodeCommandHandler(IToodeRepository ToodeRepository)
         {
-            _dbContext = dbContext;
+            _ToodeRepository = ToodeRepository;
         }
 
         public async Task<OperationResult> Handle(SaveToodeCommand request, CancellationToken cancellationToken)
@@ -26,19 +23,14 @@ namespace KooliProjekt.Application.Features.Tooted
             var result = new OperationResult();
 
             var list = new ToodeList();
-            if(request.ID == 0)
+            if (request.ID != 0)
             {
-                await _dbContext.Tooted.AddAsync(list);
-            }
-            else
-            {
-                list = await _dbContext.Tooted.FindAsync(request.ID);
-                //_dbContext.ToDoLists.Update(list);
+                list = await _ToodeRepository.GetByIdAsync(request.ID);
             }
 
             list.Name = request.Name;
-            
-            await _dbContext.SaveChangesAsync();
+
+            await _ToodeRepository.SaveAsync(list);
 
             return result;
         }

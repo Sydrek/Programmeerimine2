@@ -67,7 +67,7 @@ namespace KooliProjekt.Application.Migrations
                 name: "ArveItems",
                 columns: table => new
                 {
-                    Id = table.Column<int>(type: "int", nullable: false)
+                    ID = table.Column<int>(type: "int", nullable: false)
                         .Annotation("SqlServer:Identity", "1, 1"),
                     LineItem = table.Column<string>(type: "nvarchar(50)", maxLength: 50, nullable: false),
                     UnitPrice = table.Column<float>(type: "real", nullable: false),
@@ -78,7 +78,7 @@ namespace KooliProjekt.Application.Migrations
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_ArveItems", x => x.Id);
+                    table.PrimaryKey("PK_ArveItems", x => x.ID);
                     table.ForeignKey(
                         name: "FK_ArveItems_Arved_ArveListID",
                         column: x => x.ArveListID,
@@ -148,7 +148,7 @@ namespace KooliProjekt.Application.Migrations
                     Description = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     FotoURL = table.Column<string>(type: "nvarchar(255)", maxLength: 255, nullable: true),
                     Price = table.Column<int>(type: "int", nullable: false),
-                    ToodeListID = table.Column<int>(type: "int", nullable: true)
+                    ToodeListID = table.Column<int>(type: "int", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -157,7 +157,8 @@ namespace KooliProjekt.Application.Migrations
                         name: "FK_ToodeItems_Tooted_ToodeListID",
                         column: x => x.ToodeListID,
                         principalTable: "Tooted",
-                        principalColumn: "ID");
+                        principalColumn: "ID",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateIndex(

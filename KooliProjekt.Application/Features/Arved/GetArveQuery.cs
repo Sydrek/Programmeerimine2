@@ -1,5 +1,7 @@
-﻿using KooliProjekt.Application.Infrastructure.Results;
+﻿using KooliProjekt.Application.Data;
+using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
+using System.ComponentModel.DataAnnotations;
 
 namespace KooliProjekt.Application.Features.Arved
 {

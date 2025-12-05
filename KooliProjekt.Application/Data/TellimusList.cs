@@ -9,11 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class TellimusList
+    public class TellimusList : Entity
     {
-        [Required]
-        public int ID { get; set; }
-
         [Required]
         [MaxLength(15)]
         [MinLength(1)]

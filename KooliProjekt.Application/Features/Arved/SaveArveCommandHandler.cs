@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
-using KooliProjekt.Application.Infrastructure.Paging;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace KooliProjekt.Application.Features.Arved
 {
-    public class SaveToDoListCommandHandler : IRequestHandler<SaveArveCommand, OperationResult>
+    // 28.11
+    // Kasutab IArveRepositoryt
+    public class SaveArveCommandHandler : IRequestHandler<SaveArveCommand, OperationResult>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly IArveRepository _ArveRepository;
 
-        public SaveToDoListCommandHandler(ApplicationDbContext dbContext)
+        public SaveArveCommandHandler(IArveRepository ArveRepository)
         {
-            _dbContext = dbContext;
+            _ArveRepository = ArveRepository;
         }
 
         public async Task<OperationResult> Handle(SaveArveCommand request, CancellationToken cancellationToken)
@@ -26,18 +23,14 @@ namespace KooliProjekt.Application.Features.Arved
             var result = new OperationResult();
 
             var list = new ArveList();
-            if (request.ID == 0)
+            if (request.ID != 0)
             {
-                await _dbContext.Arved.AddAsync(list);
-            }
-            else
-            {
-                list = await _dbContext.Arved.FindAsync(request.ID);
+                list = await _ArveRepository.GetByIdAsync(request.ID);
             }
 
             list.LineItem = request.LineItem;
 
-            await _dbContext.SaveChangesAsync();
+            await _ArveRepository.SaveAsync(list);
 
             return result;
         }

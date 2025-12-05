@@ -12,7 +12,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace KooliProjekt.Application.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20251205081713_Initial")]
+    [Migration("20251205101004_Initial")]
     partial class Initial
     {
         /// <inheritdoc />
@@ -27,11 +27,11 @@ namespace KooliProjekt.Application.Migrations
 
             modelBuilder.Entity("KooliProjekt.Application.Data.ArveItem", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int>("ID")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("int");
 
-                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("Id"));
+                    SqlServerPropertyBuilderExtensions.UseIdentityColumn(b.Property<int>("ID"));
 
                     b.Property<int>("ArveListID")
                         .HasColumnType("int");
@@ -53,7 +53,7 @@ namespace KooliProjekt.Application.Migrations
                     b.Property<float>("VatRate")
                         .HasColumnType("real");
 
-                    b.HasKey("Id");
+                    b.HasKey("ID");
 
                     b.HasIndex("ArveListID");
 
@@ -223,7 +223,7 @@ namespace KooliProjekt.Application.Migrations
                     b.Property<int>("Price")
                         .HasColumnType("int");
 
-                    b.Property<int?>("ToodeListID")
+                    b.Property<int>("ToodeListID")
                         .HasColumnType("int");
 
                     b.HasKey("ID");
@@ -286,9 +286,13 @@ namespace KooliProjekt.Application.Migrations
 
             modelBuilder.Entity("KooliProjekt.Application.Data.ToodeItem", b =>
                 {
-                    b.HasOne("KooliProjekt.Application.Data.ToodeList", null)
+                    b.HasOne("KooliProjekt.Application.Data.ToodeList", "ToodeList")
                         .WithMany("Items")
-                        .HasForeignKey("ToodeListID");
+                        .HasForeignKey("ToodeListID")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("ToodeList");
                 });
 
             modelBuilder.Entity("KooliProjekt.Application.Data.ArveList", b =>

@@ -9,11 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class ToodeList
+    public class ToodeList : Entity
     {
-        [Required]
-        public int ID { get; set; }
-
         [Required]
         [MaxLength(100)]
         [MinLength(1)]

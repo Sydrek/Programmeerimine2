@@ -2,10 +2,8 @@
 
 namespace KooliProjekt.Application.Data
 {
-    public class ArveItem
+    public class ArveItem : Entity
     {
-        public int Id { get; set; }
-
         [Required]
         [StringLength(50)]
         public string LineItem { get; set; }

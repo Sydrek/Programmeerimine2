@@ -9,11 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class ArveList
+    public class ArveList : Entity
     {
-        [Required]
-        public int ID { get; set; }
-
         [Required]
         [MaxLength(255)]
         [MinLength(1)]

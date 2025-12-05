@@ -9,11 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class KlientList
+    public class KlientList : Entity
     {
-        [Required]
-        public int ID { get; set; }
-
         [Required]
         [MaxLength(100)]
         [MinLength(1)]

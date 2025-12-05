@@ -1,24 +1,21 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
+﻿using System.Threading;
 using System.Threading.Tasks;
 using KooliProjekt.Application.Data;
-using KooliProjekt.Application.Infrastructure.Paging;
+using KooliProjekt.Application.Data.Repositories;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
-using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
+    // 28.11
+    // Kasutab ITellimusRepositoryt
     public class SaveTellimusCommandHandler : IRequestHandler<SaveTellimusCommand, OperationResult>
     {
-        private readonly ApplicationDbContext _dbContext;
+        private readonly ITellimusRepository _TellimusRepository;
 
-        public SaveTellimusCommandHandler(ApplicationDbContext dbContext)
+        public SaveTellimusCommandHandler(ITellimusRepository TellimusRepository)
         {
-            _dbContext = dbContext;
+            _TellimusRepository = TellimusRepository;
         }
 
         public async Task<OperationResult> Handle(SaveTellimusCommand request, CancellationToken cancellationToken)
@@ -26,19 +23,14 @@ namespace KooliProjekt.Application.Features.Tellimused
             var result = new OperationResult();
 
             var list = new TellimusList();
-            if(request.ID == 0)
+            if (request.ID != 0)
             {
-                await _dbContext.Tellimused.AddAsync(list);
-            }
-            else
-            {
-                list = await _dbContext.Tellimused.FindAsync(request.ID);
-                //_dbContext.ToDoLists.Update(list);
+                list = await _TellimusRepository.GetByIdAsync(request.ID);
             }
 
             list.InvoiceNumber = request.InvoiceNumber;
-            
-            await _dbContext.SaveChangesAsync();
+
+            await _TellimusRepository.SaveAsync(list);
 
             return result;
         }
