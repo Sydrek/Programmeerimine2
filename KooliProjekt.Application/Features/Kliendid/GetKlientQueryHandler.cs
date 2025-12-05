@@ -24,12 +24,20 @@ namespace KooliProjekt.Application.Features.Kliendid
 
             result.Value = await _dbContext
                 .Kliendid
-                .Include(list => list.Name)
-                .Where(list => list.ID == request.Id)
+                .Include(list => list.Items)
+                .Where(list => list.ID == request.ID)
                 .Select(list => new
                 {
-                    Id = list.ID,
-                    Title = list.Name,
+                    ID = list.ID,
+                    Name = list.Name,
+
+                    Items = list.Items.Select(item => new
+                    {
+                        Address = item.Address,
+                        Email = item.Email,
+                        Phone = item.Phone,
+                        Discount = item.Discount,
+                    })
                 })
                 .FirstOrDefaultAsync();
 

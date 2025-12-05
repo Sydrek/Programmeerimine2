@@ -12,11 +12,11 @@ using Microsoft.CodeAnalysis.CSharp.Syntax;
 
 namespace KooliProjekt.Application.Features.Arved
 {
-    public class SaveArveCommandHandler : IRequestHandler<SaveArveCommand, OperationResult>
+    public class SaveToDoListCommandHandler : IRequestHandler<SaveArveCommand, OperationResult>
     {
         private readonly ApplicationDbContext _dbContext;
 
-        public SaveArveCommandHandler(ApplicationDbContext dbContext)
+        public SaveToDoListCommandHandler(ApplicationDbContext dbContext)
         {
             _dbContext = dbContext;
         }
@@ -25,23 +25,18 @@ namespace KooliProjekt.Application.Features.Arved
         {
             var result = new OperationResult();
 
-            var list = new Arve();
-            if(request.ID == 0)
+            var list = new ArveList();
+            if (request.ID == 0)
             {
                 await _dbContext.Arved.AddAsync(list);
             }
             else
             {
                 list = await _dbContext.Arved.FindAsync(request.ID);
-                //_dbContext.ToDoLists.Update(list);
             }
 
             list.LineItem = request.LineItem;
-            list.UnitPrice = request.UnitPrice;
-            list.Quantity = request.Quantity;
-            list.VatRate = request.VatRate;
-            list.Total = request.Total;
-            
+
             await _dbContext.SaveChangesAsync();
 
             return result;

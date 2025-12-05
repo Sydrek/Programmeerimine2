@@ -6,6 +6,7 @@ using KooliProjekt.Application.Data;
 using KooliProjekt.Application.Infrastructure.Results;
 using MediatR;
 using Microsoft.EntityFrameworkCore;
+using Microsoft.VisualBasic;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
@@ -24,12 +25,23 @@ namespace KooliProjekt.Application.Features.Tellimused
 
             result.Value = await _dbContext
                 .Tellimused
-                .Include(list => list.InvoiceNumber)
-                .Where(list => list.ID == request.Id)
+                .Include(list => list.Items)
+                .Where(list => list.ID == request.ID)
                 .Select(list => new
                 {
-                    Id = list.ID,
-                    Title = list.InvoiceNumber,
+                    ID = list.ID,
+                    Name = list.InvoiceNumber,
+
+                    Items = list.Items.Select(item => new
+                    {
+                        InvoiceDate = item.InvoiceDate,
+                        DueDate = item.DueDate,
+                        Status = item.Status,
+                        SubTotal = item.SubTotal,
+                        ShippingTotal = item.ShippingTotal,
+                        Discount = item.Discount,
+                        GrandTotal = item.GrandTotal,
+                    })
                 })
                 .FirstOrDefaultAsync();
 

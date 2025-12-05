@@ -10,13 +10,5 @@ namespace KooliProjekt.Application.Features.Arved
         public int ID { get; set; }
 
         public string LineItem { get; set; }
-
-        public float UnitPrice { get; set; }
-
-        public int Quantity { get; set; }
-
-        public float VatRate { get; set; }
-
-        public float Total { get; set; }
     }
 }

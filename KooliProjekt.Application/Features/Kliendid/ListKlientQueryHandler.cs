@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Kliendid
 {
-    public class ListKlientQueryHandler : IRequestHandler<ListKlientQuery, OperationResult<PagedResult<Klient>>>
+    public class ListKlientQueryHandler : IRequestHandler<ListKlientQuery, OperationResult<PagedResult<KlientList>>>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -20,9 +20,9 @@ namespace KooliProjekt.Application.Features.Kliendid
             _dbContext = dbContext;
         }
 
-        public async Task<OperationResult<PagedResult<Klient>>> Handle(ListKlientQuery request, CancellationToken cancellationToken)
+        public async Task<OperationResult<PagedResult<KlientList>>> Handle(ListKlientQuery request, CancellationToken cancellationToken)
         {
-            var result = new OperationResult<PagedResult<Klient>>();
+            var result = new OperationResult<PagedResult<KlientList>>();
 
             result.Value = await _dbContext
                 .Kliendid

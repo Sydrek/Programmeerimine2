@@ -5,7 +5,7 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Kliendid
 {
-    public class ListKlientQuery : IRequest<OperationResult<PagedResult<Klient>>>
+    public class ListKlientQuery : IRequest<OperationResult<PagedResult<KlientList>>>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

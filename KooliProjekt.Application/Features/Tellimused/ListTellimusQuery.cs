@@ -5,7 +5,7 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
-    public class ListTellimusQuery : IRequest<OperationResult<PagedResult<Tellimus>>>
+    public class ListTellimusQuery : IRequest<OperationResult<PagedResult<TellimusList>>>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

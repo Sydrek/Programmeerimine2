@@ -3,9 +3,12 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Arved
 {
-    public class GetArveQuery : IRequest<OperationResult<object>>
+    /// <summary>
+    /// 14.11.2025
+    /// Listi kustutamise command
+    /// </summary>
+    public class DeleteArveCommand : IRequest<OperationResult>
     {
         public int ID { get; set; }
-
     }
 }

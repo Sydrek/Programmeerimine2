@@ -5,7 +5,7 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Arved
 {
-    public class ListArveQuery : IRequest<OperationResult<PagedResult<Arve>>>
+    public class ListArveQuery : IRequest<OperationResult<PagedResult<ArveList>>>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }

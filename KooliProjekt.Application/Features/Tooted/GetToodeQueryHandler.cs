@@ -24,12 +24,19 @@ namespace KooliProjekt.Application.Features.Tooted
 
             result.Value = await _dbContext
                 .Tooted
-                .Include(list => list.Name)
-                .Where(list => list.ID == request.Id)
+                .Include(list => list.Items)
+                .Where(list => list.ID == request.ID)
                 .Select(list => new
                 {
-                    Id = list.ID,
-                    Title = list.Name,
+                    ID = list.ID,
+                    Name = list.Name,
+
+                    Items = list.Items.Select(item => new
+                    {
+                        Description = item.Description,
+                        FotoURL = item.FotoURL,
+                        Price = item.Price,
+                    })
                 })
                 .FirstOrDefaultAsync();
 

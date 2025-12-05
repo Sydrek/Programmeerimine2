@@ -9,9 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class Tellimus
+    public class TellimusItem
     {
-        [Required]
         public int ID { get; set; }
 
         [Required]
@@ -34,5 +33,8 @@ namespace KooliProjekt.Application.Data
         public float Discount { get; set; }
 
         public float GrandTotal { get; set; }
+
+        public TellimusList TellimusList { get; set; }
+        public int TellimusListID { get; set; }
     }
 }

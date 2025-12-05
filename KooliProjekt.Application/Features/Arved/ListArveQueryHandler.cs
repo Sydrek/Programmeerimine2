@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Arved
 {
-    public class ListArveQueryHandler : IRequestHandler<ListArveQuery, OperationResult<PagedResult<Arve>>>
+    public class ListArveQueryHandler : IRequestHandler<ListArveQuery, OperationResult<PagedResult<ArveList>>>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -20,9 +20,9 @@ namespace KooliProjekt.Application.Features.Arved
             _dbContext = dbContext;
         }
 
-        public async Task<OperationResult<PagedResult<Arve>>> Handle(ListArveQuery request, CancellationToken cancellationToken)
+        public async Task<OperationResult<PagedResult<ArveList>>> Handle(ListArveQuery request, CancellationToken cancellationToken)
         {
-            var result = new OperationResult<PagedResult<Arve>>();
+            var result = new OperationResult<PagedResult<ArveList>>();
 
             result.Value = await _dbContext
                 .Arved

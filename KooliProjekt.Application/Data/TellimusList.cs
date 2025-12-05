@@ -9,24 +9,16 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class Toode
+    public class TellimusList
     {
         [Required]
         public int ID { get; set; }
 
         [Required]
-        [MaxLength(100)]
+        [MaxLength(15)]
         [MinLength(1)]
-        public string Name { get; set; }
+        public string InvoiceNumber { get; set; }
 
-        [MaxLength(255)]
-        [MinLength(0)]
-        public string Description { get; set; }
-
-        [MaxLength(255)]
-        [MinLength(0)]
-        public string FotoURL { get; set; }
-
-        public int Price { get; set; }
-    }
+        public IList<TellimusItem> Items { get; set; }
+        }
 }

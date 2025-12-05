@@ -25,7 +25,7 @@ namespace KooliProjekt.Application.Features.Kliendid
         {
             var result = new OperationResult();
 
-            var list = new Klient();
+            var list = new KlientList();
             if(request.ID == 0)
             {
                 await _dbContext.Kliendid.AddAsync(list);
@@ -37,10 +37,6 @@ namespace KooliProjekt.Application.Features.Kliendid
             }
 
             list.Name = request.Name;
-            list.Address = request.Address;
-            list.Email = request.Email;
-            list.Phone = request.Phone;
-            list.Discount = request.Discount;
             
             await _dbContext.SaveChangesAsync();
 

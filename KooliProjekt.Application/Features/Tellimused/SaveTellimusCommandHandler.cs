@@ -25,7 +25,7 @@ namespace KooliProjekt.Application.Features.Tellimused
         {
             var result = new OperationResult();
 
-            var list = new Tellimus();
+            var list = new TellimusList();
             if(request.ID == 0)
             {
                 await _dbContext.Tellimused.AddAsync(list);
@@ -37,13 +37,6 @@ namespace KooliProjekt.Application.Features.Tellimused
             }
 
             list.InvoiceNumber = request.InvoiceNumber;
-            list.InvoiceDate = request.InvoiceDate;
-            list.DueDate = request.DueDate;
-            list.Status = request.Status;
-            list.SubTotal = request.SubTotal;
-            list.ShippingTotal = request.ShippingTotal;
-            list.Discount = request.Discount;
-            list.GrandTotal = request.GrandTotal;
             
             await _dbContext.SaveChangesAsync();
 

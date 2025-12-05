@@ -25,7 +25,7 @@ namespace KooliProjekt.Application.Features.Tooted
         {
             var result = new OperationResult();
 
-            var list = new Toode();
+            var list = new ToodeList();
             if(request.ID == 0)
             {
                 await _dbContext.Tooted.AddAsync(list);
@@ -37,9 +37,6 @@ namespace KooliProjekt.Application.Features.Tooted
             }
 
             list.Name = request.Name;
-            list.Description = request.Description;
-            list.FotoURL = request.FotoURL;
-            list.Price = request.Price;
             
             await _dbContext.SaveChangesAsync();
 

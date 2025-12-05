@@ -24,14 +24,20 @@ namespace KooliProjekt.Application.Features.Arved
 
             result.Value = await _dbContext
                 .Arved
-                .Include(list => list.LineItem)
-                .Where(list => list.ID == request.Id)
+                .Include(list => list.Items)
+                .Where(list => list.ID == request.ID)
                 .Select(list => new
                 {
-                    Id = list.ID,
-                    Title = list.LineItem,
-                    UnitPrice = list.UnitPrice,
-                    Quantity = list.Quantity,
+                    ID = list.ID,
+                    LineItem = list.LineItem,
+
+                    Items = list.Items.Select(item => new
+                    {
+                        UnitPrice = item.UnitPrice,
+                        Quantity = item.Quantity,
+                        VatRate = item.VatRate,
+                        Total = item.Total,
+                    })
                 })
                 .FirstOrDefaultAsync();
 

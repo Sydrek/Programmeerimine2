@@ -9,9 +9,8 @@ using System.ComponentModel.DataAnnotations;
 namespace KooliProjekt.Application.Data
 {
 
-    public class Klient
+    public class ToodeItem
     {
-        [Required]
         public int ID { get; set; }
 
         [Required]
@@ -19,20 +18,17 @@ namespace KooliProjekt.Application.Data
         [MinLength(1)]
         public string Name { get; set; }
 
-        [Required]
         [MaxLength(255)]
-        [MinLength(1)]
-        public string Address { get; set; }
-
-        [Required]
-        [MaxLength(100)]
-        [MinLength(3)]
-        public string Email { get; set; }
-
-        [MaxLength(15)]
         [MinLength(0)]
-        public string Phone { get; set; }
+        public string Description { get; set; }
 
-        public float Discount { get; set; }
+        [MaxLength(255)]
+        [MinLength(0)]
+        public string FotoURL { get; set; }
+
+        public int Price { get; set; }
+
+        public ToodeList ToodeList { get; set; }
+        public int ToodeListID { get; set; }
     }
 }

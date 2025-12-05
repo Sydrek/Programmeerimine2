@@ -32,7 +32,7 @@ namespace KooliProjekt.WebAPI.Controllers
         [Route("Get")]
         public async Task<IActionResult> Get(int id)
         {
-            var query = new GetArveQuery { Id = id };
+            var query = new GetArveQuery { ID = id };
             var response = await _mediator.Send(query);
 
             return Result(response);
@@ -41,6 +41,17 @@ namespace KooliProjekt.WebAPI.Controllers
         [HttpPost]
         [Route("Save")]
         public async Task<IActionResult> Save(SaveArveCommand command)
+        {
+            var response = await _mediator.Send(command);
+
+            return Result(response);
+        }
+
+        // 14.11.2025
+        // Delete meetod listi kustutamiseks
+        [HttpDelete]
+        [Route("Delete")]
+        public async Task<IActionResult> Delete(DeleteArveCommand command)
         {
             var response = await _mediator.Send(command);
 

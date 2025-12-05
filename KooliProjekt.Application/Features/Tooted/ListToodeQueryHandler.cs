@@ -12,7 +12,7 @@ using System.Threading.Tasks;
 
 namespace KooliProjekt.Application.Features.Tooted
 {
-    public class ListToodeQueryHandler : IRequestHandler<ListToodeQuery, OperationResult<PagedResult<Toode>>>
+    public class ListToodeQueryHandler : IRequestHandler<ListToodeQuery, OperationResult<PagedResult<ToodeList>>>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -21,9 +21,9 @@ namespace KooliProjekt.Application.Features.Tooted
             _dbContext = dbContext;
         }
 
-        public async Task<OperationResult<PagedResult<Toode>>> Handle(ListToodeQuery request, CancellationToken cancellationToken)
+        public async Task<OperationResult<PagedResult<ToodeList>>> Handle(ListToodeQuery request, CancellationToken cancellationToken)
         {
-            var result = new OperationResult<PagedResult<Toode>>();
+            var result = new OperationResult<PagedResult<ToodeList>>();
 
             result.Value = await _dbContext
                 .Tooted

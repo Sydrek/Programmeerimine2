@@ -3,7 +3,11 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
-    public class GetTellimusQuery : IRequest<OperationResult<object>>
+    /// <summary>
+    /// 14.11.2025
+    /// Listi kustutamise command
+    /// </summary>
+    public class DeleteTellimusCommand : IRequest<OperationResult>
     {
         public int ID { get; set; }
     }

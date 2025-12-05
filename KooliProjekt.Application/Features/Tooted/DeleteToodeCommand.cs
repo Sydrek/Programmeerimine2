@@ -3,7 +3,11 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Tooted
 {
-    public class GetToodeQuery : IRequest<OperationResult<object>>
+    /// <summary>
+    /// 14.11.2025
+    /// Listi kustutamise command
+    /// </summary>
+    public class DeleteToodeCommand : IRequest<OperationResult>
     {
         public int ID { get; set; }
     }

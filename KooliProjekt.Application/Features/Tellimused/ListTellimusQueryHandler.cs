@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore;
 
 namespace KooliProjekt.Application.Features.Tellimused
 {
-    public class ListTellimusQueryHandler : IRequestHandler<ListTellimusQuery, OperationResult<PagedResult<Tellimus>>>
+    public class ListTellimusQueryHandler : IRequestHandler<ListTellimusQuery, OperationResult<PagedResult<TellimusList>>>
     {
         private readonly ApplicationDbContext _dbContext;
 
@@ -20,9 +20,9 @@ namespace KooliProjekt.Application.Features.Tellimused
             _dbContext = dbContext;
         }
 
-        public async Task<OperationResult<PagedResult<Tellimus>>> Handle(ListTellimusQuery request, CancellationToken cancellationToken)
+        public async Task<OperationResult<PagedResult<TellimusList>>> Handle(ListTellimusQuery request, CancellationToken cancellationToken)
         {
-            var result = new OperationResult<PagedResult<Tellimus>>();
+            var result = new OperationResult<PagedResult<TellimusList>>();
 
             result.Value = await _dbContext
                 .Tellimused

@@ -14,9 +14,14 @@ namespace KooliProjekt.Application.Data
         {
         }
 
-        public DbSet<Arve> Arved { get; set; }
-        public DbSet<Klient> Kliendid { get; set; }
-        public DbSet<Tellimus> Tellimused { get; set; }
-        public DbSet<Toode> Tooted { get; set; }
+        public DbSet<ArveList> Arved { get; set; }
+        public DbSet<ArveItem> ArveItems { get; set; }
+        public DbSet<KlientList> Kliendid { get; set; }
+        public DbSet<KlientItem> KlientItems { get; set; }
+        public DbSet<TellimusList> Tellimused { get; set; }
+        public DbSet<TellimusItem> TellimusItems { get; set; }
+        public DbSet<ToodeList> Tooted { get; set; }
+        public DbSet<ToodeItem> ToodeItems { get; set; }
     }
 }
+ 

@@ -5,7 +5,7 @@ using MediatR;
 
 namespace KooliProjekt.Application.Features.Tooted
 {
-    public class ListToodeQuery : IRequest<OperationResult<PagedResult<Toode>>>
+    public class ListToodeQuery : IRequest<OperationResult<PagedResult<ToodeList>>>
     {
         public int Page { get; set; }
         public int PageSize { get; set; }
